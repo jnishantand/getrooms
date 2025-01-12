@@ -7,10 +7,11 @@ import 'package:getroom/pages/details/details.dart';
 import 'package:getroom/pages/home/home.dart';
 import 'package:getroom/pages/payment/payment_screen.dart';
 import 'package:getroom/pages/pdf/pdf.dart';
+import 'package:getroom/pages/profile/profile.dart';
 import 'package:getroom/pages/splash.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getroom/pages/profile/profile.dart';
+
 
 void main() {
   runApp(BlocProvider(
@@ -39,8 +40,8 @@ class MyApp extends StatelessWidget {
             '/login': (context) =>  LoginPage(), // Create ForgotPasswordPage widget
             '/details': (context) =>  DetailsPage(), // Create ForgotPasswordPage widget
             '/paymentScreen': (context) =>  PaymentScreen(), // Create ForgotPasswordPage widget
-            '/pdf': (context) =>  PDFViewerScreen(), // Create ForgotPasswordPage widget
-            '/profile': (context) =>  ProfilePage(), // Create ForgotPasswordPage widget
+            '/pdf': (context) =>  PDFViewerScreen(),
+            '/profile': (context) =>  ProfilePage()
 
 
           },

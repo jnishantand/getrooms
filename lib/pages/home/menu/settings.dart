@@ -100,7 +100,7 @@ class _SettingsState extends State<Settings> {
     switch (i) {
       case 0:
         {
-          Get.toNamed("'/profile");
+          Get.toNamed('/profile');
         }
         ;
       case 1:
@@ -114,6 +114,14 @@ class _SettingsState extends State<Settings> {
               context: context, title: "Logout", widget: options());
         }
       case 2:
+        {
+          Get.toNamed('/pdf');
+        }
+      case 3:
+        {
+          Get.toNamed('/pdf');
+        }
+      case 4:
         {
           Get.toNamed('/pdf');
         }

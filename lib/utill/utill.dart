@@ -43,7 +43,10 @@ class Utill {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Align(alignment: Alignment.topLeft, child: Text("${title}")),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(alignment: Alignment.topLeft, child: Text("${title}")),
+          ),
           SizedBox(
             height:150.0, // Fixed height for the horizontal list
             child: ListView.builder(

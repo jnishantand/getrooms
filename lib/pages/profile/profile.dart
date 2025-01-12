@@ -9,8 +9,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String fullName = "Pavan Patel";
-  String email = "pavanpatel@example.com";
+  String fullName = "Name";
+  String email = "Email";
+  String address = "Address";
   String? imagePath;
 
   final ImagePicker _picker = ImagePicker();
@@ -60,6 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         String tempName = fullName;
         String tempEmail = email;
+        String tempAddress = address;
         return AlertDialog(
           title: Text("Edit Profile"),
           content: Column(
@@ -74,6 +76,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 decoration: InputDecoration(labelText: "Email Address"),
                 onChanged: (value) => tempEmail = value,
                 controller: TextEditingController(text: email),
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: "Address"),
+                onChanged: (value) => tempAddress = value,
+                controller: TextEditingController(text: address),
               ),
             ],
           ),
@@ -105,59 +112,65 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text("Profile"),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
-              children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage:
-                  imagePath != null ? FileImage(File(imagePath!)) : null,
-                  child: imagePath == null
-                      ? Icon(
-                    Icons.person,
-                    size: 60,
-                    color: Colors.grey[700],
-                  )
-                      : null,
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: GestureDetector(
-                    onTap: _showImagePickerOptions,
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.blue,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage:
+                    imagePath != null ? FileImage(File(imagePath!)) : null,
+                    child: imagePath == null
+                        ? Icon(
+                      Icons.person,
+                      size: 60,
+                      color: Colors.grey[700],
+                    )
+                        : null,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: _showImagePickerOptions,
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.blue,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Text(
-              fullName,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              email,
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: _editProfile,
-              icon: Icon(Icons.edit),
-              label: Text("Edit Profile"),
-            ),
-          ],
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                fullName,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Text(
+                email,
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              ),    SizedBox(height: 8),
+              Text(
+                address,
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: _editProfile,
+                icon: Icon(Icons.edit),
+                label: Text("Edit Profile"),
+              ),
+            ],
+          ),
         ),
       ),
     );

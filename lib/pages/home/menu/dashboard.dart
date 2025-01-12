@@ -11,7 +11,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final List<String> Categorieslist=[
+  final List<String> Categorieslist = [
     "Trending",
     "Featured",
     "Newly added",
@@ -55,7 +55,6 @@ class _DashboardState extends State<Dashboard> {
           body: CustomScrollView(
         slivers: [
           SliverAppBar(
-
             pinned: true,
             expandedHeight: 300,
             centerTitle: false,
@@ -88,21 +87,23 @@ class _DashboardState extends State<Dashboard> {
           ),
           SliverFillRemaining(
               child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              child: ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (c, i) {
-                    return Utill.dashBoardRowItem(items,Categorieslist[i]);
-                  },
-                  separatorBuilder: (c, i) {
-                    return SizedBox(
-                      height: 20,
-                    );
-                  },
-                  itemCount: items.length),
-            ),
-          ))
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  child: ListView.separated(
+                      itemBuilder: (c, i) {
+                        return Utill.dashBoardRowItem(items, Categorieslist[i]);
+                      },
+                      separatorBuilder: (c, i) {
+                        return SizedBox(
+                          height: 50,
+                          child: Divider(
+                            height: 1,
+                          ),
+                        );
+                      },
+                      itemCount: items.length),
+                ),
+              ))
         ],
       )),
     );
