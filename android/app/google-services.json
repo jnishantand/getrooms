@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "197684801942",
+    "project_id": "getrooms-36a65",
+    "storage_bucket": "getrooms-36a65.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197684801942:android:81665ab81f0842e110edb7",
+        "android_client_info": {
+          "package_name": "com.example.getroom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "197684801942-08jc8k3dlh95hnfog0aed50vds6clpe0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoT4JP5z7VliD47KJYL5iibezZduKbihQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "197684801942-08jc8k3dlh95hnfog0aed50vds6clpe0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "197684801942-9rep2ue6b2d25ac27m69q55kvpghlc62.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.getroom"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
