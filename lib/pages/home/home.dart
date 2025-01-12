@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getroom/pages/home/menu/profile.dart';
 import 'package:getroom/pages/home/menu/search.dart';
 import 'package:getroom/pages/home/menu/settings.dart';
 
@@ -29,11 +30,11 @@ class _HomePageState extends State<HomePage> {
   ];
 
   // List of widgets for each menu item
-  final List<Widget> ListOfWidgets = <Widget>[
-    Center(child: Text('Home Page')), // Placehol
-    Center(child: Text('Home Page')), // Placehol
-    Center(child: Text('Home Page')), // P// der for Home page
- // P// P Replace with your Settings page widget
+  final ListOfPages = [
+    Profile(),
+  Search(),
+    Settings(),
+
   ];
 
   void onTapMenu(int index) {
@@ -45,14 +46,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(menu_list[currentIndex].label!)),
       bottomNavigationBar: BottomNavigationBar(
         items: menu_list,
         onTap: onTapMenu,
-        currentIndex: currentIndex,
+     //   currentIndex: currentIndex,
         type: BottomNavigationBarType.fixed,
       ),
-      body: Search(),
+      body: ListOfPages[currentIndex],
     );
   }
 }
