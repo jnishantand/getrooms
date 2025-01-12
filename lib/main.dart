@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:getroom/Auth/Login/login.dart';
 import 'package:getroom/Auth/signup/signup.dart';
 import 'package:getroom/cubits/theme_cubit.dart';
+import 'package:getroom/pages/details/details.dart';
 import 'package:getroom/pages/home/home.dart';
+import 'package:getroom/pages/payment/payment_screen.dart';
 import 'package:getroom/pages/splash.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +35,11 @@ class MyApp extends StatelessWidget {
             '/forgot-password': (context) => const ForgotPasswordPage(), // Create ForgotPasswordPage widget
             '/home': (context) => const HomePage(), // Create ForgotPasswordPage widget
             '/login': (context) =>  LoginPage(), // Create ForgotPasswordPage widget
+            '/details': (context) =>  DetailsPage(), // Create ForgotPasswordPage widget
+            '/paymentScreen': (context) =>  PaymentScreen(), // Create ForgotPasswordPage widget
+
+//PaymentScreen
+
 
           },
         );

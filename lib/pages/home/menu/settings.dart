@@ -55,6 +55,7 @@ class _SettingsState extends State<Settings> {
         body: CustomScrollView(
       slivers: [
         SliverAppBar(
+          automaticallyImplyLeading: false,
           expandedHeight: 100,
           pinned: true,
           centerTitle: true,

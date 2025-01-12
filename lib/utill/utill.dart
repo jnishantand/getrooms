@@ -51,81 +51,86 @@ class Utill {
               itemCount: items.length,
               itemBuilder: (context, index) {
                 final item = items[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Stack(
-                    children: [
-                      // Background Image
-                      Container(
-                        width: 200.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.0),
-                          image: DecorationImage(
-                            image: NetworkImage(item['image']),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      // Foreground Details
-                      Positioned(
-                        bottom: 10.0,
-                        left: 10.0,
-                        right: 10.0,
-                        child: Container(
-                          padding: const EdgeInsets.all(8.0),
+                return GestureDetector(
+                  onTap: (){
+                    Get.toNamed('/details');
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Stack(
+                      children: [
+                        // Background Image
+                        Container(
+                          width: 200.0,
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.7),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                item['title'],
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 4.0),
-                              Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow, size: 16.0),
-                                  const SizedBox(width: 4.0),
-                                  Text(
-                                    '${item['rating']}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 4.0),
-                              Text(
-                                item['location'],
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.8),
-                                  fontSize: 12.0,
-                                ),
-                              ),
-                              const SizedBox(height: 4.0),
-                              Text(
-                                item['price'],
-                                style: TextStyle(
-                                  color: Colors.greenAccent,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                            borderRadius: BorderRadius.circular(16.0),
+                            image: DecorationImage(
+                              image: NetworkImage(item['image']),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        // Foreground Details
+                        Positioned(
+                          bottom: 10.0,
+                          left: 10.0,
+                          right: 10.0,
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  item['title'],
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 4.0),
+                                Row(
+                                  children: [
+                                    Icon(Icons.star, color: Colors.yellow, size: 16.0),
+                                    const SizedBox(width: 4.0),
+                                    Text(
+                                      '${item['rating']}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 4.0),
+                                Text(
+                                  item['location'],
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                                const SizedBox(height: 4.0),
+                                Text(
+                                  item['price'],
+                                  style: TextStyle(
+                                    color: Colors.greenAccent,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginPage extends StatelessWidget {
-   LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
   final localStorage = LocalStorage();
 
   @override

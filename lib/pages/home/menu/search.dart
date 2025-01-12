@@ -81,14 +81,19 @@ class _SearchState extends State<Search> {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-                return RoomCard(
-                  imageUrls: [
-                    "https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
-                    "https://picsum.photos/id/1/5000/3333"
-                  ],
-                  title: roomsList[index].title,
-                  location: roomsList[index].location,
-                  rating: double.parse(roomsList[index].ratings),
+                return InkWell(
+                  onTap:(){
+                    Get.toNamed("/details")
+                  },
+                  child: RoomCard(
+                    imageUrls: [
+                      "https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
+                      "https://picsum.photos/id/1/5000/3333"
+                    ],
+                    title: roomsList[index].title,
+                    location: roomsList[index].location,
+                    rating: double.parse(roomsList[index].ratings),
+                  ),
                 );
               }, childCount: roomsList.length),
             )
