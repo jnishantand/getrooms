@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getroom/pages/home/menu/settings.dart';
 import 'package:getroom/utill/utill.dart';
 
 class Rooms {
@@ -83,7 +82,7 @@ class _SearchState extends State<Search> {
               delegate: SliverChildBuilderDelegate((context, index) {
                 return InkWell(
                   onTap:(){
-                    Get.toNamed("/details")
+                    Get.toNamed("/details");
                   },
                   child: RoomCard(
                     imageUrls: [

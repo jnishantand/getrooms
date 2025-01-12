@@ -53,51 +53,56 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          automaticallyImplyLeading: false,
-          expandedHeight: 100,
-          pinned: true,
-          centerTitle: true,
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text("Settings"),
-            collapseMode: CollapseMode.parallax,
-            centerTitle: true,
-          ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate((c, i) {
-            final item = listItems[i];
-            return BlocBuilder<ThemeCubit, ThemeData>(
-                builder: (context, theme) {
-              return GestureDetector(
-                onTap: () {
-                  goTO(i);
-                },
-                child: Container(
-                  height: 80,
-                  margin: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey),
-                  child: Center(
-                      child: Text(i == 1
-                          ? theme.brightness == Brightness.light
-                              ? "Dark Mode"
-                              : "Light Mode"
-                          : item)),
-                ),
-              );
-            });
-          }, childCount: listItems.length),
-        ),
-      ],
-    ));
+          slivers: [
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              expandedHeight: 100,
+              pinned: true,
+              centerTitle: true,
+              flexibleSpace: FlexibleSpaceBar(
+                title: Text("Settings"),
+                collapseMode: CollapseMode.parallax,
+                centerTitle: true,
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((c, i) {
+                final item = listItems[i];
+                return BlocBuilder<ThemeCubit, ThemeData>(
+                    builder: (context, theme) {
+                      return GestureDetector(
+                        onTap: () {
+                          goTO(i);
+                        },
+                        child: Container(
+                          height: 80,
+                          margin: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey),
+                          child: Center(
+                              child: Text(i == 1
+                                  ? theme.brightness == Brightness.light
+                                  ? "Dark Mode"
+                                  : "Light Mode"
+                                  : item)),
+                        ),
+                      );
+                    });
+              }, childCount: listItems.length),
+            ),
+          ],
+        ));
   }
 
   void goTO(int i) {
     debugPrint("clicked $i");
     switch (i) {
+      case 0:
+        {
+          Get.toNamed("'/profile");
+        }
+        ;
       case 1:
         {
           context.read<ThemeCubit>().toggleTheme();
@@ -107,6 +112,10 @@ class _SettingsState extends State<Settings> {
         {
           Utill.CustomDialog(
               context: context, title: "Logout", widget: options());
+        }
+      case 2:
+        {
+          Get.toNamed('/pdf');
         }
     }
   }
