@@ -11,6 +11,12 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final List<String> Categorieslist=[
+    "Trending",
+    "Featured",
+    "Newly added",
+    "Single only"
+  ];
   final List<Map<String, dynamic>> items = [
     {
       'image': 'https://picsum.photos/id/12/2500/1667',
@@ -33,6 +39,13 @@ class _DashboardState extends State<Dashboard> {
       'location': 'Ontario, Canada',
       'price': '\$100/night',
     },
+    {
+      'image': 'https://picsum.photos/id/21/3008/2008',
+      'title': 'Full furnished',
+      'rating': 4,
+      'location': 'Indore',
+      'price': '\$30/night',
+    },
   ];
 
   @override
@@ -40,10 +53,9 @@ class _DashboardState extends State<Dashboard> {
     return SafeArea(
       child: Scaffold(
           body: CustomScrollView(
-
         slivers: [
           SliverAppBar(
-            toolbarHeight: 100,
+
             pinned: true,
             expandedHeight: 300,
             centerTitle: false,
@@ -81,7 +93,7 @@ class _DashboardState extends State<Dashboard> {
               child: ListView.separated(
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (c, i) {
-                    return Utill.dashBoardRowItem(items);
+                    return Utill.dashBoardRowItem(items,Categorieslist[i]);
                   },
                   separatorBuilder: (c, i) {
                     return SizedBox(

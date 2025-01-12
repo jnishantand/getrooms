@@ -38,14 +38,14 @@ class Utill {
         ));
   }
 
-  static Container dashBoardRowItem( dynamic items) {
+  static Container dashBoardRowItem( dynamic items,title) {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Align(alignment: Alignment.topLeft, child: Text("New Rooms")),
+          Align(alignment: Alignment.topLeft, child: Text("${title}")),
           SizedBox(
-            height: 250.0, // Fixed height for the horizontal list
+            height:150.0, // Fixed height for the horizontal list
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: items.length,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getroom/Auth/Login/login.dart';
+import 'package:getroom/Storage/local.dart';
 import 'package:getroom/cubits/theme_cubit.dart';
 import 'package:getroom/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ class Settings extends StatefulWidget {
   State<Settings> createState() => _SettingsState();
 }
 
+final localStorage = LocalStorage();
 final listItems = [
   "Profile",
   "darkmode",
@@ -28,7 +31,14 @@ class _SettingsState extends State<Settings> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Utill.cutom_button(
-              width: 80, height: 35, onTap: () => Get.back(), title: "sure"),
+              width: 80,
+              height: 35,
+              onTap: () async {
+                await localStorage.clearAll();
+                Get.back();
+                Get.to(LoginPage());
+              },
+              title: "sure"),
           SizedBox(
             width: 8.0,
           ),
