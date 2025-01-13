@@ -8,7 +8,11 @@ class Rooms {
   String location;
   String ratings;
 
-  Rooms({required this.images, required this.title, required this.location,required this.ratings});
+  Rooms(
+      {required this.images,
+      required this.title,
+      required this.location,
+      required this.ratings});
 }
 
 class Search extends StatefulWidget {
@@ -19,14 +23,24 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+
+
+  bool single=false;
+
+  bool oneBHK=false;
+
+  bool twoBHK=false;
+
+  bool threeBHK=false;
+
   TextEditingController searchController = TextEditingController();
 
   List<Rooms> roomsList = <Rooms>[
-    Rooms(images: [], title: "Room1", location: "Malwa mill",ratings: "3"),
-    Rooms(images: [], title: "Room1", location: "Vijay Nagar",ratings: "1"),
-    Rooms(images: [], title: "Room1", location: "Sayaji Squre",ratings: "2"),
-    Rooms(images: [], title: "Room1", location: "Pani pura",ratings: "5"),
-    Rooms(images: [], title: "Room1", location: "Scheme no54",ratings: "3"),
+    Rooms(images: [], title: "Room1", location: "Malwa mill", ratings: "3"),
+    Rooms(images: [], title: "Room1", location: "Vijay Nagar", ratings: "1"),
+    Rooms(images: [], title: "Room1", location: "Sayaji Squre", ratings: "2"),
+    Rooms(images: [], title: "Room1", location: "Pani pura", ratings: "5"),
+    Rooms(images: [], title: "Room1", location: "Scheme no54", ratings: "3"),
   ];
 
   @override
@@ -72,16 +86,108 @@ class _SearchState extends State<Search> {
           slivers: [
             SliverAppBar(
               pinned: true,
+              automaticallyImplyLeading: false,
               expandedHeight: 100,
               flexibleSpace: FlexibleSpaceBar(
-                centerTitle: true,
-                title: Text("Available rooms"),
+                centerTitle: false,
+                title: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text("Available rooms"),
+                ),
               ),
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: 8.0,
+                  ),
+                  child: InkWell(
+                      onTap: () {
+                        Utill.CustomDialog(
+                            context: context,
+                            title: "Filter",
+                            widget: StatefulBuilder(
+                              builder: (BuildContext context, StateSetter setState) {
+                                return SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                        leading: Text("1BHK"),
+                                        trailing: Checkbox(
+                                          value: oneBHK,
+                                          onChanged: (bool? val) {
+                                            setState(() {
+                                              oneBHK = val!;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      ListTile(
+                                        leading: Text("2BHK"),
+                                        trailing: Checkbox(
+                                          value: twoBHK,
+                                          onChanged: (bool? val) {
+                                            setState(() {
+                                              twoBHK = val!;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      ListTile(
+                                        leading: Text("3BHK"),
+                                        trailing: Checkbox(
+                                          value: threeBHK,
+                                          onChanged: (bool? val) {
+                                            setState(() {
+                                              threeBHK = val!;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      ListTile(
+                                        leading: Text("Single"),
+                                        trailing: Checkbox(
+                                          value: single,
+                                          onChanged: (bool? val) {
+                                            setState(() {
+                                              single = val!;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Column(
+                                        children: [
+                                          Center(
+                                            child: TextField(
+                                              decoration: InputDecoration(hintText: "location"),
+                                              controller: searchController,
+                                            ),
+                                          ),
+                                          Center(
+                                            child: MaterialButton(
+                                              onPressed: () {
+                                                debugPrint("njjj${searchController.text}");
+                                                Get.back();
+                                              },
+                                              child: Text("Search"),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            )
+                        );
+                      },
+                      child: Icon(Icons.filter_alt_rounded)),
+                )
+              ],
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 return InkWell(
-                  onTap:(){
+                  onTap: () {
                     Get.toNamed("/details");
                   },
                   child: RoomCard(

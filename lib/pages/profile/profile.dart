@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -105,6 +107,81 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  Future<void> addRoom({
+    required String title,
+    required int price,
+    required bool isBooked,
+    required String location,
+    required String category,
+    required List<String> imageUrls,
+  }) async {
+    try {
+      await FirebaseFirestore.instance.collection('rooms').add({
+        'title': title,
+        'price': price,
+        'isBooked': isBooked,
+        'location': location,
+        'category': category,
+        'images': imageUrls,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+      debugPrint("njj:Room added successfully!");
+    } catch (e) {
+      debugPrint("njj Error adding room: $e");
+    }
+  }
+
+  Stream<List<Map<String, dynamic>>> fetchRooms() {
+    return FirebaseFirestore.instance.collection('rooms')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
+  }
+
+
+  Stream<List<Map<String, dynamic>>> filterRooms({String? location, String? category}) {
+    Query query = FirebaseFirestore.instance.collection('rooms');
+
+    if (location != null) {
+      query = query.where('location', isEqualTo: location);
+    }
+    if (category != null) {
+      query = query.where('category', isEqualTo: category);
+    }
+
+    return query.orderBy('createdAt', descending: true).snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    });
+  }
+
+
+  Future<String> uploadImage(File image) async {
+    try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference ref = FirebaseStorage.instance.ref().child('room_images/$fileName');
+      UploadTask uploadTask = ref.putFile(image);
+      TaskSnapshot snapshot = await uploadTask;
+      return await snapshot.ref.getDownloadURL();
+    } catch (e) {
+      print("Error uploading image: $e");
+      return '';
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  //  addRoom(title: "Room 1", price: 100, isBooked: false, location: "Kathmandu", category: "Single", imageUrls: ["https://picsum.photos/200/300", "https://picsum.photos/200/300", "https://picsum.photos/200/300"]);
+  //   final rooms=fetchRooms();
+  //   rooms.listen((event) {
+  //     debugPrint("njj: $event");
+  //   });
+
+    filterRooms(location: "Kathmandu", category: "Single").listen((event) {
+      debugPrint("njj: $event");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,64 +189,66 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text("Profile"),
         centerTitle: true,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage:
-                    imagePath != null ? FileImage(File(imagePath!)) : null,
-                    child: imagePath == null
-                        ? Icon(
-                      Icons.person,
-                      size: 60,
-                      color: Colors.grey[700],
-                    )
-                        : null,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: _showImagePickerOptions,
-                      child: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.blue,
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage:
+                      imagePath != null ? FileImage(File(imagePath!)) : null,
+                      child: imagePath == null
+                          ? Icon(
+                        Icons.person,
+                        size: 60,
+                        color: Colors.grey[700],
+                      )
+                          : null,
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: _showImagePickerOptions,
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.blue,
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Text(
-                fullName,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8),
-              Text(
-                email,
-                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-              ),    SizedBox(height: 8),
-              Text(
-                address,
-                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton.icon(
-                onPressed: _editProfile,
-                icon: Icon(Icons.edit),
-                label: Text("Edit Profile"),
-              ),
-            ],
+                  ],
+                ),
+                SizedBox(height: 20),
+                Text(
+                  fullName,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  email,
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                ),    SizedBox(height: 8),
+                Text(
+                  address,
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton.icon(
+                  onPressed: _editProfile,
+                  icon: Icon(Icons.edit),
+                  label: Text("Edit Profile"),
+                ),
+              ],
+            ),
           ),
         ),
       ),

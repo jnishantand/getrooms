@@ -5,6 +5,10 @@ import 'package:getroom/Storage/local.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
+import 'package:getroom/pages/auth/socials/google.dart';
+
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
   final localStorage = LocalStorage();
@@ -72,7 +76,8 @@ class LoginPage extends StatelessWidget {
             // Google Login Button
             ElevatedButton.icon(
               onPressed: () async {
-                await _loginWithGoogle(context);
+               // await _loginWithGoogle(context);
+                await FirebaseLogin().GoogleLogin(context);
               },
               icon: const Icon(Icons.g_mobiledata),
               label: const Text('Login with Google'),

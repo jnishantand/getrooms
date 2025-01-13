@@ -12,11 +12,14 @@ class Utill {
   Utill._internal();
 
   static CustomDialog(
+
       {BuildContext? context, String? title, Widget? widget, bool? isOptions}) {
     return showDialog(
         context: context!,
         builder: (context) {
+
           return AlertDialog(
+            key: UniqueKey(),
             title: Text(title!),
             content: widget!,
           );
@@ -45,7 +48,18 @@ class Utill {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Align(alignment: Alignment.topLeft, child: Text("${title}")),
+            child: Align(alignment: Alignment.topLeft, child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("${title}"),
+                InkWell(
+                    onTap: (){
+                      Get.toNamed('/seeAll');
+                    },
+                    child: Text("See All")),
+
+              ],
+            )),
           ),
           SizedBox(
             height:150.0, // Fixed height for the horizontal list

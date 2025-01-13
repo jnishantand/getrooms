@@ -21,6 +21,7 @@ final listItems = [
   "Terms and Conditions",
   "Privicy Policy",
   "About US",
+  "Transitions",
   "Logout"
 ];
 
@@ -108,7 +109,7 @@ class _SettingsState extends State<Settings> {
           context.read<ThemeCubit>().toggleTheme();
         }
         ;
-      case 5:
+      case 6:
         {
           Utill.CustomDialog(
               context: context, title: "Logout", widget: options());
