@@ -107,66 +107,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<void> addRoom({
-    required String title,
-    required int price,
-    required bool isBooked,
-    required String location,
-    required String category,
-    required List<String> imageUrls,
-  }) async {
-    try {
-      await FirebaseFirestore.instance.collection('rooms').add({
-        'title': title,
-        'price': price,
-        'isBooked': isBooked,
-        'location': location,
-        'category': category,
-        'images': imageUrls,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-      debugPrint("njj:Room added successfully!");
-    } catch (e) {
-      debugPrint("njj Error adding room: $e");
-    }
-  }
-
-  Stream<List<Map<String, dynamic>>> fetchRooms() {
-    return FirebaseFirestore.instance.collection('rooms')
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
-  }
-
-
-  Stream<List<Map<String, dynamic>>> filterRooms({String? location, String? category}) {
-    Query query = FirebaseFirestore.instance.collection('rooms');
-
-    if (location != null) {
-      query = query.where('location', isEqualTo: location);
-    }
-    if (category != null) {
-      query = query.where('category', isEqualTo: category);
-    }
-
-    return query.orderBy('createdAt', descending: true).snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-    });
-  }
-
-
-  Future<String> uploadImage(File image) async {
-    try {
-      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference ref = FirebaseStorage.instance.ref().child('room_images/$fileName');
-      UploadTask uploadTask = ref.putFile(image);
-      TaskSnapshot snapshot = await uploadTask;
-      return await snapshot.ref.getDownloadURL();
-    } catch (e) {
-      print("Error uploading image: $e");
-      return '';
-    }
-  }
   @override
   void initState() {
     // TODO: implement initState
@@ -177,9 +117,9 @@ class _ProfilePageState extends State<ProfilePage> {
   //     debugPrint("njj: $event");
   //   });
 
-    filterRooms(location: "Kathmandu", category: "Single").listen((event) {
-      debugPrint("njj: $event");
-    });
+    // filterRooms(location: "Kathmandu", category: "Single").listen((event) {
+    //   debugPrint("njj: $event");
+    // });
   }
 
   @override

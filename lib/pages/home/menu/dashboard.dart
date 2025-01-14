@@ -54,7 +54,6 @@ class _DashboardState extends State<Dashboard> {
     },
   ];
 
-
   Future<void> addRoom({
     required String title,
     required int price,
@@ -80,17 +79,18 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Stream<List<Map<String, dynamic>>> fetchRooms() {
-    return FirebaseFirestore.instance.collection('rooms')
+    return FirebaseFirestore.instance
+        .collection('rooms')
         .orderBy('createdAt', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
   }
 
-
   Future<String> uploadImage(File image) async {
     try {
       String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference ref = FirebaseStorage.instance.ref().child('room_images/$fileName');
+      Reference ref =
+          FirebaseStorage.instance.ref().child('room_images/$fileName');
       UploadTask uploadTask = ref.putFile(image);
       TaskSnapshot snapshot = await uploadTask;
       return await snapshot.ref.getDownloadURL();
@@ -100,7 +100,8 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  Stream<List<Map<String, dynamic>>> filterRooms({String? location, String? category}) {
+  Stream<List<Map<String, dynamic>>> filterRooms(
+      {String? location, String? category}) {
     Query query = FirebaseFirestore.instance.collection('rooms');
 
     if (location != null) {
@@ -110,79 +111,89 @@ class _DashboardState extends State<Dashboard> {
       query = query.where('category', isEqualTo: category);
     }
 
-    return query.orderBy('createdAt', descending: true).snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList() as List<Map<String,dynamic>>);
+    return query.orderBy('createdAt', descending: true).snapshots().map(
+        (snapshot) => snapshot.docs.map((doc) => doc.data()).toList()
+            as List<Map<String, dynamic>>);
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            pinned: true,
-            expandedHeight: 100,
-            centerTitle: false,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: IconButton(onPressed: (){
-                  debugPrint("clciked");
-                 Get.toNamed('/notification');
-                }, icon:Icon(Icons.notifications),),
-              )
-            ],
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [Text("Hii ${userName}")],
-            ),
-            floating: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                  width: double.infinity,
-                  height: 200,
-                  child: ListView.builder(
-                    itemBuilder: (c, i) {
-                      return Image.network(
-                        "https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
-                        fit: BoxFit.cover,
-                        width: MediaQuery.of(context).size.width,
-                        height: 100,
-                      );
-                    },
-                    itemCount: 2,
-                    scrollDirection: Axis.horizontal,
-                  )),
-            )
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Get.toNamed('/addRoom');
+            },
+            child: Icon(Icons.add),
           ),
-          SliverFillRemaining(
-              child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.separated(
-                      itemBuilder: (c, i) {
-                        return Utill.dashBoardRowItem(items, Categorieslist[i]);
-                      },
-                      shrinkWrap: true,
-                      separatorBuilder: (c, i) {
-                        return SizedBox(
-                          height: 50,
-                          child: Divider(
-                            height: 1,
-                          ),
-                        );
-                      },
-                      itemCount: items.length),
+          body: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  pinned: true,
+                  expandedHeight: 100,
+                  centerTitle: false,
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: IconButton(
+                        onPressed: () {
+                          debugPrint("clciked");
+                          Get.toNamed('/notification');
+                        },
+                        icon: Icon(Icons.notifications),
+                      ),
+                    )
+                  ],
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [Text("Hii ${userName}")],
+                  ),
+                  floating: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Container(
+                        width: double.infinity,
+                        height: 200,
+                        child: ListView.builder(
+                          itemBuilder: (c, i) {
+                            return Image.network(
+                              "https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
+                              fit: BoxFit.cover,
+                              width: MediaQuery.of(context).size.width,
+                              height: 100,
+                            );
+                          },
+                          itemCount: 2,
+                          scrollDirection: Axis.horizontal,
+                        )),
+                  )),
+              SliverFillRemaining(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                          itemBuilder: (c, i) {
+                            return Utill.dashBoardRowItem(
+                                items, Categorieslist[i]);
+                          },
+                          shrinkWrap: true,
+                          separatorBuilder: (c, i) {
+                            return SizedBox(
+                              height: 50,
+                              child: Divider(
+                                height: 1,
+                              ),
+                            );
+                          },
+                          itemCount: items.length),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ))
-        ],
-      )),
+              ))
+            ],
+          )),
     );
   }
 }

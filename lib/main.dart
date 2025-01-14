@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getroom/Auth/Login/login.dart';
 import 'package:getroom/Auth/signup/signup.dart';
+import 'package:getroom/cubits/addroomcubit/addroomcubit.dart';
 import 'package:getroom/cubits/theme_cubit.dart';
+import 'package:getroom/pages/addrooms/addrooms.dart';
 import 'package:getroom/pages/details/details.dart';
 import 'package:getroom/pages/home/home.dart';
 import 'package:getroom/pages/notifications/notification.dart';
@@ -34,26 +36,35 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit,ThemeData>(
       builder: (context, state) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: state,
-          initialRoute: '/',
-          routes: {
-            '/': (context) => const Splash(),
-            '/signup': (context) => const SignUpPage(), // Create SignUpPage widget
-            '/forgot-password': (context) => const ForgotPasswordPage(), // Create ForgotPasswordPage widget
-            '/home': (context) => const HomePage(), // Create ForgotPasswordPage widget
-            '/login': (context) =>  LoginPage(), // Create ForgotPasswordPage widget
-            '/details': (context) =>  DetailsPage(), // Create ForgotPasswordPage widget
-            '/paymentScreen': (context) =>  PaymentScreen(), // Create ForgotPasswordPage widget
-            '/pdf': (context) =>  PDFViewerScreen(),
-            '/profile': (context) =>  ProfilePage(),
-            '/notification': (context) =>  NotificationPage(),
-            '/seeAll': (context) =>  SeeAll(),
+        return MultiBlocProvider(
+
+          providers: [
+            BlocProvider(create: (_)=>AddRoomCubit())
+          ],
+          child: GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: state,
+            initialRoute: '/',
+            routes: {
+              '/': (context) => const Splash(),
+              '/signup': (context) => const SignUpPage(), // Create SignUpPage widget
+              '/forgot-password': (context) => const ForgotPasswordPage(), // Create ForgotPasswordPage widget
+              '/home': (context) => const HomePage(), // Create ForgotPasswordPage widget
+              '/login': (context) =>  LoginPage(), // Create ForgotPasswordPage widget
+              '/details': (context) =>  DetailsPage(), // Create ForgotPasswordPage widget
+              '/paymentScreen': (context) =>  PaymentScreen(), // Create ForgotPasswordPage widget
+              '/pdf': (context) =>  PDFViewerScreen(),
+              '/profile': (context) =>  ProfilePage(),
+              '/notification': (context) =>  NotificationPage(),
+              '/seeAll': (context) =>  SeeAll(),
+              '/addRoom': (context) =>  AddRoomForm(),
 
 
-          },
+
+
+            },
+          ),
         );
       },
     );
